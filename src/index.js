@@ -1,5 +1,7 @@
 import { Notify } from 'notiflix';
 import fetchPixabay from './js/fetchPixabay';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/style.css';
 
 const refs = {
@@ -49,6 +51,7 @@ async function onSearch(event) {
     console.log(error);
   }
   refs.formSearch.reset();
+  let lightbox = new SimpleLightbox('.gallery a');
 }
 
 //----------------функція LoadMore
@@ -58,7 +61,7 @@ async function loadMore() {
     const response = await fetchPixabay(userInput, page);
     onLoadMoreRenderCard(response.hits);
     perPage += response.hits.length;
-
+    let lightbox = new SimpleLightbox('.gallery a');
     if (perPage >= response.totalHits) {
       Notify.failure("We're sorry, but you've reached the end of search results.");
       refs.btnLoadMore.classList.add('visually-hidden');
